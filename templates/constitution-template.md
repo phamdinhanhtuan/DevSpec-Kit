@@ -1,50 +1,32 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Hiến Pháp Dự Án (Project Constitution)
+<!-- Phiên bản: 1.0.0 | Tác giả: Phạm Đình Anh Tuấn (phamdinhanhtuan) -->
 
-## Core Principles
+Tài liệu này xác định các nguyên tắc bất biến cho toàn bộ vòng đời phát triển dự án. Tất cả đặc tả (specs), kế hoạch (plans), nhiệm vụ (tasks) và mã nguồn triển khai (implementation) BẮT BUỘC phải tuân thủ nghiêm ngặt các nguyên tắc dưới đây.
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+---
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+## 1. Đơn giản trước (Simplicity First)
+- Luôn ưu tiên giải pháp dễ hiểu, tường minh, ngắn gọn nhất đáp ứng trọn vẹn yêu cầu.
+- Tránh over-engineering, không tạo cấu trúc abstraction phức tạp khi chưa có bằng chứng thực sự cần thiết.
+- Mã nguồn viết ra phải dễ bảo trì, dễ đọc cho đồng đội và chính mình sau này.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+## 2. Bám sát Đặc tả (Strict Spec Adherence)
+- Tuyệt đối không tự ý thêm thư viện ngoài (external dependencies) hoặc tính năng nằm ngoài phạm vi đặc tả (`spec.md`).
+- Mọi thay đổi về phạm vi hay phát sinh tính năng mới phải được cập nhật lại vào `spec.md` và có sự đồng ý của người dùng trước khi code.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+## 3. Kỷ luật Kiểm thử (Test-Driven Discipline)
+- Tất cả các logic quan trọng (business logic, validation, edge cases, error handling) bắt buộc phải có automated unit test / integration test.
+- Code không được coi là hoàn tất ("Done") nếu chưa pass 100% test suites liên quan.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## 4. Không giả định khi mơ hồ (Zero Ambiguity Tolerance)
+- Điểm nào chưa rõ ràng, mơ hồ hoặc có nhiều phương án lựa chọn: **BẮT BUỘC HỎI NGƯỜI DÙNG**, tuyệt đối không tự ý phỏng đoán rồi làm sai lệch ý muốn của họ.
+- Sử dụng lệnh `/speckit-clarify` hoặc hỏi trực tiếp để chốt phương án rõ ràng.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## 5. Kiểm soát Từng bước có Duyệt (Step-by-Step Approval)
+- Tuân thủ đúng chu trình Spec-Driven Development (SDD):
+  1. `Constitution` (Hiến pháp) -> 2. `Specify` (Đặc tả) -> 3. `Clarify` (Làm rõ) -> 4. `Plan` (Kế hoạch) -> 5. `Tasks` (Nhiệm vụ) -> 6. `Implement` (Triển khai) -> 7. `Converge` (Hội tụ / Kiểm thử).
+- Mỗi bước dừng lại báo cáo kết quả rõ ràng và chờ người dùng duyệt trước khi chuyển sang bước tiếp theo.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+## 6. Giao tiếp & Tài liệu Chuẩn mực (Communication & Documentation)
+- Mặc định giao tiếp, giải thích và viết tài liệu bằng Tiếng Việt rõ ràng, chuẩn kỹ thuật (kèm thuật ngữ chuẩn quốc tế khi cần).
+- Đảm bảo commit messages chuẩn Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`).
