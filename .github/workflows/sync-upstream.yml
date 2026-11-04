@@ -1,0 +1,64 @@
+name: Sync Upstream Spec-Kit
+
+on:
+  schedule:
+    # Tự động chạy đồng bộ hàng tuần vào Chủ nhật lúc 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Nhánh đích cần cập nhật (mặc định: main)'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    name: Sync with github/spec-kit (Upstream)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.target_branch || 'main' }}
+
+      - name: Setup Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add Upstream Remote and Fetch
+        run: |
+          git remote add upstream https://github.com/github/spec-kit.git || git remote set-url upstream https://github.com/github/spec-kit.git
+          git fetch upstream main --tags
+
+      - name: Merge Upstream Changes
+        id: merge_step
+        run: |
+          TARGET_BRANCH="${{ github.event.inputs.target_branch || 'main' }}"
+          echo "Syncing upstream/main into $TARGET_BRANCH..."
+          
+          # Cố gắng merge tự động
+          if git merge upstream/main -m "chore(sync): automated sync with github/spec-kit upstream [skip ci]" --allow-unrelated-histories; then
+            echo "merge_status=success" >> $GITHUB_OUTPUT
+            echo "Merged upstream cleanly."
+          else
+            echo "Conflict detected during merge. Resolving with ours strategy for custom presets..."
+            git merge --abort || true
+            git checkout -b sync/upstream-$(date +'%Y%m%d')
+            git merge upstream/main -X ours -m "chore(sync): automated sync with conflicts resolved" || true
+            git push origin sync/upstream-$(date +'%Y%m%d')
+            echo "merge_status=conflict_branch_pushed" >> $GITHUB_OUTPUT
+            echo "Created and pushed branch sync/upstream-$(date +'%Y%m%d') for review."
+            exit 0
+          fi
+
+      - name: Push to Origin
+        if: steps.merge_step.outputs.merge_status == 'success'
+        run: |
+          TARGET_BRANCH="${{ github.event.inputs.target_branch || 'main' }}"
+          git push origin "$TARGET_BRANCH"
