@@ -4,7 +4,7 @@
 > Bộ công cụ tiêu chuẩn hóa quy trình phát triển phần mềm theo đặc tả (**Spec-Driven Development - SDD**) do **Phạm Đình Anh Tuấn (phamdinhanhtuan)** phát triển độc lập, tối ưu riêng cho các trợ lý lập trình AI (Google Antigravity, Cursor, Copilot, Claude Code).
 
 <p align="center">
-    <a href="https://github.com/phamdinhanhtuan/spec-kit/actions/workflows/ci.yml"><img src="https://github.com/phamdinhanhtuan/spec-kit/actions/workflows/ci.yml/badge.svg" alt="CI"/></a>
+    <a href="https://github.com/phamdinhanhtuan/DevSpec-Kit/actions/workflows/ci.yml"><img src="https://github.com/phamdinhanhtuan/DevSpec-Kit/actions/workflows/ci.yml/badge.svg" alt="CI"/></a>
     <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="Giấy phép"/></a>
     <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"/>
     <a href="https://github.com/phamdinhanhtuan"><img src="https://img.shields.io/badge/tác_giả-phamdinhanhtuan-orange.svg" alt="Tác giả"/></a>
@@ -87,8 +87,8 @@ Tất cả các thành viên và AI khi tham gia phát triển dự án phải t
 
 ### 1. Cài đặt vào máy
 ```bash
-git clone https://github.com/phamdinhanhtuan/spec-kit.git
-cd spec-kit
+git clone https://github.com/phamdinhanhtuan/DevSpec-Kit.git
+cd DevSpec-Kit
 
 # Cài đặt dạng editable
 pip install -e .
