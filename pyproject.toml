@@ -10,7 +10,7 @@ urls = { "Homepage" = "https://github.com/phamdinhanhtuan/spec-kit", "Upstream" 
 requires-python = ">=3.11"
 dependencies = [
     "typer>=0.24.0",
-    "click>=8.2.1",
+    "click>=8.5.0",
     "rich",
     "readchar",
     "pyyaml>=6.0",
